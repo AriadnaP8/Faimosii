@@ -21,13 +21,13 @@ import sys
 # Class which models a question in a project.  Note that questions have a
 # maximum number of points they are worth, and are composed of a series of
 # test cases
-class Question(object):
+class Question(object): # clasa de baza 
 
-    def raiseNotDefined(self):
+    def raiseNotDefined(self): # metoda afiseaza un mesaj de eroare daca nu e implementata
         print('Method not implemented: %s' % inspect.stack()[1][3])
         sys.exit(1)
 
-    def __init__(self, questionDict, display):
+    def __init__(self, questionDict, display): #functioneaza ca si un constructor in java
         self.maxPoints = int(questionDict['max_points'])
         self.testCases = []
         self.display = display
@@ -47,8 +47,8 @@ class Question(object):
         self.raiseNotDefined()
 
 # Question in which all test cases must be passed in order to receive credit
-class PassAllTestsQuestion(Question):
-
+class PassAllTestsQuestion(Question): #subclasa a lui Question(clasa parinte)
+ #necesita ca toate testele sa fie trecute pentru a primi punctajul corect
     def execute(self, grades):
         # TODO: is this the right way to use grades?  The autograder doesn't seem to use it.
         testsFailed = False
