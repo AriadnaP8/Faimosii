@@ -80,15 +80,31 @@ CAPSULE_SIZE = 0.25
 WALL_RADIUS = 0.15
 
 class InfoPane:
+    # This code defines the __init__ method for a class, 
+    # and it looks like it's related to creating some kind of graphical user interface or display pane.
+    """
+        The method takes three parameters: self, layout, and gridSize.
+        self -> refers to the instance of the class that this method will operate on.
+        layout -> seems to be an object that has attributes like width and height.
+        gridSize -> is another parameter, possibly representing the size of a grid in the graphical display.
+
+    """
     def __init__(self, layout, gridSize):
         self.gridSize = gridSize
         self.width = (layout.width) * gridSize
         self.base = (layout.height + 1) * gridSize
         self.height = INFO_PANE_HEIGHT
         self.fontSize = 24
-        self.textColor = PACMAN_COLOR
-        self.drawPane()
+        self.textColor = PACMAN_COLOR   #seteaza culoarea
+        self.drawPane()  # asta i ca sa deseneze panoul
 
+    #This method is a utility function for translating a point relative to the bottom left of the info pane.
+    """
+        Preia fie doi parametri (pos ca o tuplă de coordonate x, y) fie un singur parametru (x), cu y având implicit valoarea None.
+        Dacă nu este furnizat y, presupune că pos este o tuplă și o descompune în x și y.
+        Apoi adaugă o margine (self.gridSize) la coordonata x și ajustează coordonata y în funcție de atributul base.
+        Coordonatele traduse (x, y) sunt returnate
+    """
     def toScreen(self, pos, y = None):
         """
           Translates a point relative from the bottom left of the info pane.
@@ -102,6 +118,8 @@ class InfoPane:
         y = self.base + y
         return x,y
 
+    #partea asta practic deseneaza starea initala a panoului de informatii
+    #Creează un element text (self.scoreText) la o poziție specifică cu scorul inițial setat la 0.
     def drawPane(self):
         self.scoreText = text( self.toScreen(0, 0  ), self.textColor, "SCORE:    0", "Times", self.fontSize, "bold")
 
