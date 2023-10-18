@@ -74,8 +74,13 @@ class GameState:
     # static variable keeps track of which states have had getLegalActions called
     explored = set()
     def getAndResetExplored():
+         # creaza o copie a atributelor explorate si le stocheaza intr-o variabila temp
         tmp = GameState.explored.copy()
+
+        
+        # reseteaza atributele explorate la un set gol
         GameState.explored = set()
+        
         return tmp
     getAndResetExplored = staticmethod(getAndResetExplored)
 
@@ -84,12 +89,16 @@ class GameState:
         Returns the legal actions for the agent specified.
         """
 #        GameState.explored.add(self)
+        # retunrneaza o lista gola si in caz de scucces si in caz de pierdere
         if self.isWin() or self.isLose(): return []
 
+        # daca agentIndex == 0 => pacman-ul se misca 
         if agentIndex == 0:  # Pacman is moving
+            # daca se misca pacman-ul se face apel la o metoda numita "getLEgalActions" din clasa PacmanRules linia 338 
             return PacmanRules.getLegalActions( self )
         else:
-            return GhostRules.getLegalActions( self, agentIndex )
+            # daca nu se misa pacman-ul => se misca o fantoma deci se face apel la metonda getLegalActions din clasa GhostRules
+            return .getLegalActions( self, agentIndex )
 
     def generateChild( self, agentIndex, action):
         """
