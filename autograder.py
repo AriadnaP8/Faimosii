@@ -28,6 +28,7 @@ except:
     pass
 
 # register arguments and set default values
+#parse ce se scrie in command line
 def readCommand(argv):
     parser = optparse.OptionParser(description = 'Run public tests on student code')
     parser.set_defaults(generateSolutions=False, edxOutput=False, gsOutput=False, muteOutput=False, printTestCase=False, noGraphics=False)
@@ -86,33 +87,34 @@ def readCommand(argv):
 # confirm we should author solution files
 def confirmGenerate():
     print('WARNING: this action will overwrite any solution files.')
-    print('Are you sure you want to proceed? (yes/no)')
+    print('Are you sure you want to proceed? (yes/no)') #it prints this for the user to be sure for the action he makes
     while True:
         ans = sys.stdin.readline().strip()
         if ans == 'yes':
             break
-        elif ans == 'no':
+        elif ans == 'no': #daca raspunsul dat de user e nu atunci se face exit
             sys.exit(0)
         else:
-            print('please answer either "yes" or "no"')
+            print('please answer either "yes" or "no"') #daca scrie altceva in afara de yes no
 
 
 # TODO: Fix this so that it tracebacks work correctly
 # Looking at source of the traceback module, presuming it works
 # the same as the intepreters, it uses co_filename.  This is,
 # however, a readonly attribute.
+#asociaza un modul la un file
 def setModuleName(module, filename):
     functionType = type(confirmGenerate)
     classType = type(optparse.Option)
 
     for i in dir(module):
         o = getattr(module, i)
-        if hasattr(o, '__file__'): continue
+        if hasattr(o, '__file__'): continue # verifica daca un atribut gasit are un file atribut, daca are face skip
 
         if type(o) == functionType:
-            setattr(o, '__file__', filename)
+            setattr(o, '__file__', filename) #daca e atributul functie seteaza acel atribut la filename
         elif type(o) == classType:
-            setattr(o, '__file__', filename)
+            setattr(o, '__file__', filename) #daca e tip de clasa functie seteaza acel atribut la filename
             # TODO: assign member __file__'s?
         #print(i, type(o))
 
@@ -125,21 +127,21 @@ def loadModuleString(moduleSource):
     #
     #f = StringIO(moduleCodeDict[k])
     #tmp = imp.load_module(k, f, k, (".py", "r", imp.PY_SOURCE))
-    tmp = imp.new_module(k)
-    exec(moduleCodeDict[k] in tmp.__dict__)
-    setModuleName(tmp, k)
+    tmp = imp.new_module(k)# creaza un nou modul denumit k
+    exec(moduleCodeDict[k] in tmp.__dict__) # populeaza pe tmp  cu codul din moduleSource
+    setModuleName(tmp, k) #seteaza atributul la k al file ului
     return tmp
 
 import py_compile
 
 def loadModuleFile(moduleName, filePath):
-    with open(filePath, 'r') as f:
+    with open(filePath, 'r') as f:#deschide in mod read
         return imp.load_module(moduleName, f, "%s.py" % moduleName, (".py", "r", imp.PY_SOURCE))
 
 
 def readFile(path, root=""):
     "Read file from disk at specified path and return as string"
-    with open(os.path.join(root, path), 'r') as handle:
+    with open(os.path.join(root, path), 'r') as handle: #deschide in mod read
         return handle.read()
 
 
@@ -177,17 +179,17 @@ import pprint
 def splitStrings(d):
     d2 = dict(d) #dict creaza un dictionar
     for k in d:
-        if k[0:2] == "__":
+        if k[0:2] == "__": #se verifica daca incepe cu __
             del d2[k]
             continue
-        if d2[k].find("\n") >= 0:
-            d2[k] = d2[k].split("\n")
-    return d2
+        if d2[k].find("\n") >= 0: #daca contine \n
+            d2[k] = d2[k].split("\n") #se face split cand gaseste \n
+    return d2 #return d2 modificat cu spatii
 
 
 def printTest(testDict, solutionDict):
-    pp = pprint.PrettyPrinter(indent=4) # pprint este pretty print
-    print("Test case:")
+    pp = pprint.PrettyPrinter(indent=4)#identare de 4 spatii
+    print("Test case:")#incepe sa afiseze detalii
     for line in testDict["__raw_lines__"]:
         print("   |", line)
     print("Solution:")
