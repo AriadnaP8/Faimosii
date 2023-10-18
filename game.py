@@ -47,13 +47,13 @@ class Agent:
         raiseNotDefined()
 
 class Directions:
-    NORTH = 'North'
-    SOUTH = 'South'
-    EAST = 'East'
-    WEST = 'West'
+    NORTH = 'North'    # Nordul displayului este in jos (linia 76) 
+    SOUTH = 'South'    # Sudul displayului este in sus
+    EAST = 'East'      # Estul displayului este in staga
+    WEST = 'West'      # Vestul displayului este in dreapta 
     STOP = 'Stop'
 
-    LEFT =       {NORTH: WEST,
+    LEFT =       {NORTH: WEST,    # seteaza directiile in functie de directia de mers a caracterului (pt stanga, dreapta si inapoi)    
                    SOUTH: EAST,
                    EAST:  NORTH,
                    WEST:  SOUTH,
@@ -76,30 +76,30 @@ class Configuration:
     horizontally and y increases vertically.  Therefore, north is the direction of increasing y, or (0,1).
     """
 
-    def __init__(self, pos, direction):
+    def __init__(self, pos, direction):  # initializare cu pozitia si directia data
         self.pos = pos
         self.direction = direction
 
-    def getPosition(self):
+    def getPosition(self): # returneaza pozitia ca pereche (x, y)
         return (self.pos)
 
-    def getDirection(self):
+    def getDirection(self): # returneaza directia (NORTH/SOUTH/...)
         return self.direction
 
-    def isInteger(self):
+    def isInteger(self):    # ne spune daca x si y din pozitia obiectului sunt numere intregi
         x,y = self.pos
         return x == int(x) and y == int(y)
 
-    def __eq__(self, other):
+    def __eq__(self, other): # ne spune daca doua obiecte sunt egale(au aceeasi pozitie si directie)
         if other == None: return False
         return (self.pos == other.pos and self.direction == other.direction)
 
-    def __hash__(self):
+    def __hash__(self):   # retruneaza un hashcode-ul pozitiei curente a caracterului
         x = hash(self.pos)
         y = hash(self.direction)
         return hash(x + 13 * y)
 
-    def __str__(self):
+    def __str__(self):   # returneaza stringul cu pozitia si directia caracterului
         return "(x,y)="+str(self.pos)+", "+str(self.direction)
 
     def generateChild(self, vector):
@@ -112,7 +112,7 @@ class Configuration:
         """
         x, y= self.pos
         dx, dy = vector
-        direction = Actions.vectorToDirection(vector)
+        direction = Actions.vectorToDirection(vector)  # copilul ia directa data ca argument
         if direction == Directions.STOP:
             direction = self.direction # There is no stop direction
         return Configuration((x + dx, y+dy), direction)
@@ -122,7 +122,7 @@ class AgentState:
     AgentStates hold the state of an agent (configuration, speed, scared, etc).
     """
 
-    def __init__( self, startConfiguration, isPacman ):
+    def __init__( self, startConfiguration, isPacman ):  # initializarea agentului
         self.start = startConfiguration
         self.configuration = startConfiguration
         self.isPacman = isPacman
@@ -130,7 +130,7 @@ class AgentState:
         self.numCarrying = 0
         self.numReturned = 0
 
-    def __str__( self ):
+    def __str__( self ): # stringul cu pozitia si tipul caracterului
         if self.isPacman:
             return "Pacman: " + str( self.configuration )
         else:
