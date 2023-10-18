@@ -47,10 +47,10 @@ class Agent:
         raiseNotDefined()
 
 class Directions:
-    NORTH = 'North'    # Nordul displayului este in jos (linia 76) 
-    SOUTH = 'South'    # Sudul displayului este in sus
-    EAST = 'East'      # Estul displayului este in staga
-    WEST = 'West'      # Vestul displayului este in dreapta 
+    NORTH = 'North'    # Nordul displayului este in sus (linia 76) 
+    SOUTH = 'South'    # Sudul displayului este in jos
+    EAST = 'East'      # Estul displayului este in dreapta
+    WEST = 'West'      # Vestul displayului este in stanga 
     STOP = 'Stop'
 
     LEFT =       {NORTH: WEST,    # seteaza directiile in functie de directia de mers a caracterului (pt stanga, dreapta si inapoi)    
