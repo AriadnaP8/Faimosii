@@ -175,7 +175,7 @@ ERROR_HINT_MAP = {
 import pprint
 
 def splitStrings(d):
-    d2 = dict(d)
+    d2 = dict(d) #dict creaza un dictionar
     for k in d:
         if k[0:2] == "__":
             del d2[k]
@@ -186,7 +186,7 @@ def splitStrings(d):
 
 
 def printTest(testDict, solutionDict):
-    pp = pprint.PrettyPrinter(indent=4)
+    pp = pprint.PrettyPrinter(indent=4) # pprint este pretty print
     print("Test case:")
     for line in testDict["__raw_lines__"]:
         print("   |", line)
