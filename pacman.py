@@ -98,7 +98,7 @@ class GameState:
             return PacmanRules.getLegalActions( self )
         else:
             # daca nu se misa pacman-ul => se misca o fantoma deci se face apel la metonda getLegalActions din clasa GhostRules
-            return .getLegalActions( self, agentIndex )
+            return.getLegalActions( self, agentIndex )
 
     def generateChild( self, agentIndex, action):
         """
